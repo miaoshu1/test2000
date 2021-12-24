@@ -118,4 +118,7 @@ public class User {
     public void setEditTime(String editTime) {
         this.editTime = editTime;
     }
+
+    private int a;
+    private int b;
 }
