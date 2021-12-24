@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjpowernode.crm.mapper.UserMapper">
+
+    <select id="getUser" resultType="com.bjpowernode.crm.pojo.User">
+        select * from tbl_user where loginAct=#{loginAct} and loginPwd=#{loginPwd}
+    </select>
+
+    <update id="update">
+        update tbl_user set loginPwd=#{newPwd} where loginPwd=#{oldPwd}
+    </update>
+
+</mapper>
