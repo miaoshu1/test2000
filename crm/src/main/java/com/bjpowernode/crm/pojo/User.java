@@ -119,4 +119,6 @@ public class User {
         this.editTime = editTime;
     }
 
+    private int a;
+    private int b;
 }
