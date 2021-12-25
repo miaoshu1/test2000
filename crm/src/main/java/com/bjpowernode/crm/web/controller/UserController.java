@@ -42,7 +42,7 @@ public class UserController {
 
         User user = userService.getUser(username,password,ip);
 
-        session.setAttribute(Constants.LOGIM_USER,user);
+        session.setAttribute(Constants.LOGIN_USER,user);
 
         if (autoLogin){
             int maxAge = 3600 * 24 * 10;//10天
@@ -76,7 +76,7 @@ public class UserController {
 
     @RequestMapping("changePwd.do")
     public Map changePwd(String oldPwd,String newPwd){
-        User user = (User)session.getAttribute(Constants.LOGIM_USER);
+        User user = (User)session.getAttribute(Constants.LOGIN_USER);
         userService.changePwd(oldPwd, newPwd, user);
 
         return new HashMap(){{
@@ -87,7 +87,7 @@ public class UserController {
 
     @RequestMapping("logout.do")
     public void logout(HttpServletResponse response) throws IOException{
-        session.removeAttribute(Constants.LOGIM_USER);
+        session.removeAttribute(Constants.LOGIN_USER);
 
         //清除免登陆的cookie数据
         Cookie cookie = new Cookie(Constants.CookieNames.USER_NAME, null);

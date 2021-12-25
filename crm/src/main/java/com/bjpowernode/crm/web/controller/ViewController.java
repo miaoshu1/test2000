@@ -46,7 +46,7 @@ public class ViewController {
             User user = userService.getUserForAuto(username, password, ip);
 
             if (user != null){
-                session.setAttribute(Constants.LOGIM_USER,user);
+                session.setAttribute(Constants.LOGIN_USER,user);
                 return "redirect:/workbench/index.html";
             }
 

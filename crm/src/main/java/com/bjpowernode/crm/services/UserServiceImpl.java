@@ -103,14 +103,17 @@ public class UserServiceImpl implements UserService {
         if (allowIps!=null && !"".equals(allowIps)){
             String[] ips = allowIps.split(",");
 
+            boolean allow = false;
             for (String s : ips) {
                 if (ip.equals(s)){
-                    return user;
+                    allow = true;
                 }
                 break;
             }
 
-            return null;
+            if (!allow){
+                return null;
+            }
         }
 
         return user;

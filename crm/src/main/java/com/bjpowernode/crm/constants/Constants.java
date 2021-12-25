@@ -6,7 +6,7 @@ import java.util.Map;
 
 public interface Constants {
     /** 登陆的用户 */
-    String LOGIM_USER = "loginUser";
+    String LOGIN_USER = "loginUser";
 
     interface Result{
         Map SUC = new HashMap(){
