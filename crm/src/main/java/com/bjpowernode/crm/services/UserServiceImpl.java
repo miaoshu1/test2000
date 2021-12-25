@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int update(String oldPwd, String newPwd) {
+    public int update(String oldPwd, String newPwd,User user) {
         return userMapper.update(oldPwd,newPwd);
     }
 }

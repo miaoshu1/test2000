@@ -44,7 +44,7 @@ public class UserController {
     public Map changePwd(String oldPwd,String newPwd){
         User user = (User)session.getAttribute(Constants.LOGIM_USER);
 
-        int update = userService.update(oldPwd, newPwd);
+        int update = userService.update(oldPwd, newPwd,user);
 
         return Constants.Result.SUC_WITH_MSG;
     }
