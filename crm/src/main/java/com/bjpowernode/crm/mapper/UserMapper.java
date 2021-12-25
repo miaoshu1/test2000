@@ -7,5 +7,5 @@ public interface UserMapper {
     User getUser(@Param("loginAct") String username,
                  @Param("loginPwd") String password);
 
-    int update(@Param("oldPwd") String oldPwd, @Param("newPwd") String newPwd);
+    void changePwd(@Param("pwd") String oldPwd, @Param("id") String id);
 }

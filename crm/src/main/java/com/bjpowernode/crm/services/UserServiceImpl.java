@@ -74,8 +74,57 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    public User getUserForAuto(String username,String password,String ip){
+        User user = userMapper.getUser(username, password);
+
+        if (user == null){
+            return null;
+        }
+
+        //判断是否过期
+        //失效时间为空表示永不失效 yyyy-MM-dd HH:mm:ss
+        String expireTime = user.getExpireTime();
+        if (expireTime != null && !"".equals(expireTime)){
+            long now = System.currentTimeMillis();
+            try {
+                Date expireDate = Constants.DateFormat.SDF19.parse(expireTime);
+                long expire = expireDate.getTime();
+                if (now > expire){
+                    return null;
+                }
+            } catch (ParseException e) {
+                return null;
+            }
+        }
+
+        // 判断ip是否允许访问
+        // 为空时表示不限制IP，多个IP地址之间使用半角逗号隔开
+        String allowIps = user.getAllowIps();
+        if (allowIps!=null && !"".equals(allowIps)){
+            String[] ips = allowIps.split(",");
+
+            for (String s : ips) {
+                if (ip.equals(s)){
+                    return user;
+                }
+                break;
+            }
+
+            return null;
+        }
+
+        return user;
+    }
+
     @Override
-    public int update(String oldPwd, String newPwd,User user) {
-        return userMapper.update(oldPwd,newPwd);
+    public void changePwd(String oldPwd, String newPwd, User user) {
+        String loginPwd = user.getLoginPwd();//真实密码
+        oldPwd = MD5Util.getMD5(oldPwd);//用户输入的旧密码
+        if (!oldPwd.equals(loginPwd)){
+            throw new RuntimeException(Constants.Message.ERR_OLDPWD);
+        }
+
+        newPwd = MD5Util.getMD5(newPwd);
+        userMapper.changePwd(newPwd,user.getId());
     }
 }
