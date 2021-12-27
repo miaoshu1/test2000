@@ -8,4 +8,6 @@ public interface UserMapper {
                  @Param("loginPwd") String password);
 
     void changePwd(@Param("pwd") String oldPwd, @Param("id") String id);
+
+    User get(String id);
 }

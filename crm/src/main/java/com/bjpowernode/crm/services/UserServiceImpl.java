@@ -121,9 +121,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changePwd(String oldPwd, String newPwd, User user) {
-        String loginPwd = user.getLoginPwd();//真实密码
+        String id = user.getId();
+        User user1 = userMapper.get(id);
         oldPwd = MD5Util.getMD5(oldPwd);//用户输入的旧密码
-        if (!oldPwd.equals(loginPwd)){
+        if (!oldPwd.equals(user1.getLoginPwd())){
             throw new RuntimeException(Constants.Message.ERR_OLDPWD);
         }
 

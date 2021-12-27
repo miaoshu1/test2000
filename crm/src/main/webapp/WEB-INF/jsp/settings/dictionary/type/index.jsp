@@ -66,6 +66,14 @@
 
 				location = "/type/delForce.do?id="+id;
 			})
+
+			$("#selectAll").click(function () {
+				$(":checkbox[name=id]").prop("checked", this.checked);
+			})
+
+			$(":checkbox[name=id]").click(function () {
+				$("#selectAll").prop("checked", $(":checkbox[name=id]").size() == $(":checkbox:checked[name=id]").size());
+			})
 		})
 	</script>
 </head>
@@ -90,7 +98,7 @@
 		<table class="table table-hover">
 			<thead>
 				<tr style="color: #B3B3B3;">
-					<td><input type="checkbox" /></td>
+					<td><input type="checkbox" id="selectAll"/></td>
 					<td>序号</td>
 					<td>编码</td>
 					<td>名称</td>
