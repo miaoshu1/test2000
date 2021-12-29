@@ -14,4 +14,6 @@ public interface DeptMapper {
     Dept get(String id);
 
     void del(String[] ids);
+
+    boolean getRepeat(String no);
 }

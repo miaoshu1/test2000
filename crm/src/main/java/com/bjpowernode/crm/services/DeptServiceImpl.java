@@ -2,6 +2,7 @@ package com.bjpowernode.crm.services;
 
 import com.bjpowernode.crm.mapper.DeptMapper;
 import com.bjpowernode.crm.pojo.Dept;
+import com.bjpowernode.crm.utils.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,11 @@ public class DeptServiceImpl implements DeptService{
 
     @Override
     public void save(Dept dept) {
+        dept.setId(UUIDUtil.getUUID());
+        String no = dept.getNo();
+        if (deptMapper.getRepeat(no)){
+            throw new RuntimeException("部门编码重复！");
+        }
         deptMapper.save(dept);
     }
 
