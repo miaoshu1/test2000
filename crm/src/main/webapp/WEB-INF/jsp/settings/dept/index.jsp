@@ -313,6 +313,8 @@
 		</div>
 	</div>
 	
+	<%@include file="/WEB-INF/jsp/inc/header.jsp"%>
+	
 	<!-- 创建部门的模态窗口 -->
 	<div class="modal fade" id="createDeptModal" role="dialog">
 		<div class="modal-dialog" role="document" style="width: 80%;">

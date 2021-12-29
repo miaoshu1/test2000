@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <!-- 我的资料 -->
 <div class="modal fade" id="myInformation" role="dialog">
     <div class="modal-dialog" role="document" style="width: 30%;">
@@ -152,7 +152,7 @@
             <li class="dropdown user-dropdown">
                 <a href="javascript:void(0)" style="text-decoration: none; color: white;" class="dropdown-toggle"
                    data-toggle="dropdown">
-                    <span class="glyphicon glyphicon-user"></span> 1 <span class="caret"></span>
+                    <span class="glyphicon glyphicon-user"></span> ${loginUser.name} <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" style="width:120px;min-width:120px;right:-15px;left: auto;">
                     <li><a href="/workbench/index.html"><span class="glyphicon glyphicon-home"></span> 工作台</a></li>

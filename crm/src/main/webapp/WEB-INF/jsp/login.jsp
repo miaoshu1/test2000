@@ -22,7 +22,7 @@
 					success: function(data) {
 						// data: {success: true/false, msg: "xxx"}
 						if (data.success) {
-							location = "/workbench/index.html";
+							location = "${param.redirectUrl}" || "/workbench/index.html";
 						}
 
 						if (data.msg) {// 非空字符串、非null、非0、非null、非undefined、非false

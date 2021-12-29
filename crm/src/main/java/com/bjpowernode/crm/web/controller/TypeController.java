@@ -26,6 +26,12 @@ public class TypeController {
         return mv;
     }
 
+    @RequestMapping("types.json")
+    @ResponseBody
+    public List types(){
+        return typeService.getAll();
+    }
+
     @RequestMapping("check.do")
     @ResponseBody
     public Map checkDo(String id){

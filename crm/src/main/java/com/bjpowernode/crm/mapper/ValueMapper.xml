@@ -16,4 +16,77 @@
             #{i}
         </foreach>
     </delete>
+
+
+    <resultMap id="valueMap" type="com.bjpowernode.crm.pojo.Value">
+        <id property="id" column="v_id"/>
+        <result property="value" column="v_value"/>
+        <result property="text" column="v_text"/>
+        <result property="orderNo" column="v_orderNo"/>
+        <result property="typeId" column="v_typeId"/>
+
+        <association property="type">
+            <id property="id" column="t_id"/>
+            <result property="name" column="t_name"/>
+            <result property="description" column="t_description"/>
+        </association>
+    </resultMap>
+    <select id="getAll" resultMap="valueMap">
+        select v.id          v_id,
+               v.value       v_value,
+               v.text        v_text,
+               v.orderNo     v_orderNo,
+               v.typeId      v_typeId,
+               t.id          t_id,
+               t.name        t_name,
+               t.description t_description
+        from tbl_dictionary_value v
+                 left join tbl_dictionary_type t on v.typeId = t.id
+        order by v.typeId desc, v_orderNo asc
+    </select>
+
+    <update id="changeOrderNo">
+        update tbl_dictionary_value
+        set orderNo=#{orderNo}
+        where id = #{id}
+    </update>
+
+    <insert id="save">
+        insert into tbl_dictionary_value value ( #{id},
+            #{value},
+            #{text},
+            #{orderNo},
+            #{typeId}
+            )
+    </insert>
+
+    <select id="get" resultMap="valueMap">
+        select v.id          v_id,
+               v.value       v_value,
+               v.text        v_text,
+               v.orderNo     v_orderNo,
+               v.typeId      v_typeId,
+               t.id          t_id,
+               t.name        t_name,
+               t.description t_description
+        from tbl_dictionary_value v
+                 left join tbl_dictionary_type t on v.typeId = t.id
+        where v.id = #{id}
+
+    </select>
+
+    <update id="edit">
+        update tbl_dictionary_value
+        set value=#{value},
+            text=#{text},
+            orderNo=#{orderNo}
+        where id = #{id}
+    </update>
+
+    <delete id="del">
+        delete from tbl_dictionary_value where id in
+        <foreach collection="array" open="(" separator="," close=")" item="i">
+            #{i}
+        </foreach>
+    </delete>
 </mapper>
