@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjpowernode.crm.mapper.ActMapper">
+
+    <select id="getAll" resultType="Activity">
+        select *
+        from tbl_marketing_activities
+        <where>
+            <if test="name!=null and name!=''">
+                and name like '%' #{name} '%'
+            </if>
+            <if test="owner!=null and owner!=''">
+                and owner like concat('%',#{owner},'%')
+            </if>
+            <if test="startDate!=null and startDate!=''">
+                and startDate=#{startDate}
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                and endDate=#{endDate}
+            </if>
+
+        </where>
+    </select>
+
+    <insert id="save">
+        insert into tbl_marketing_activities
+        values (#{id},
+                #{owner},
+                #{name},
+                #{startDate},
+                #{endDate},
+                #{cost},
+                #{description},
+                #{createBy},
+                #{createTime},
+                #{editBy},
+                #{editTime})
+
+    </insert>
+
+    <select id="get" resultType="Activity">
+        select *
+        from tbl_marketing_activities
+        where id = #{id}
+    </select>
+
+    <update id="edit">
+        update tbl_marketing_activities
+        set owner=#{owner},
+            name=#{name},
+            startDate=#{startDate},
+            endDate=#{endDate},
+            cost=#{cost},
+            description=#{description},
+            createBy=#{createBy},
+            createTime=#{createTime},
+            editBy=#{editBy},
+            editTime=#{editTime}
+        where id=#{id}
+    </update>
+
+    <delete id="delete">
+        delete from tbl_marketing_activities where id in
+        <foreach collection="array" open="(" separator="," close=")" item="i">
+            #{i}
+        </foreach>
+    </delete>
+
+    <insert id="saveList">
+        insert into tbl_marketing_activities values
+        <foreach collection="list" separator="," item="act">
+            (
+            #{act.id},
+            #{act.owner},
+            #{act.name},
+            #{act.startDate},
+            #{act.endDate},
+            #{act.cost},
+            #{act.description},
+            #{act.createBy},
+            #{act.createTime},
+            #{act.editBy},
+            #{act.editTime}
+            )
+        </foreach>
+    </insert>
+</mapper>

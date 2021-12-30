@@ -5,6 +5,7 @@ import com.bjpowernode.crm.pojo.User;
 import com.bjpowernode.crm.services.UserService;
 import com.bjpowernode.crm.utils.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +18,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController// @Controller + @ResponseBody
@@ -96,5 +98,10 @@ public class UserController {
         response.addCookie(cookie);
 
         response.sendRedirect("/");
+    }
+
+    @GetMapping("owners.json")
+    public List owners(){
+        return userService.getOwners();
     }
 }

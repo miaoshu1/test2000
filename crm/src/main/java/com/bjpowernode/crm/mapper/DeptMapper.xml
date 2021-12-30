@@ -26,6 +26,10 @@
         select count(*) from tbl_dept where no=#{no}
     </select>
 
+    <select id="getRepeat2" resultType="boolean">
+        select count(*) from tbl_dept where no=#{no} and id!=#{id}
+    </select>
+
     <update id="edit">
         update tbl_dept
         set no=#{no},

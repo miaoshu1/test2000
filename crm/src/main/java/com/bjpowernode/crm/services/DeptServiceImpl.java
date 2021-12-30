@@ -31,6 +31,9 @@ public class DeptServiceImpl implements DeptService{
 
     @Override
     public void edit(Dept dept) {
+        if (deptMapper.getRepeat2(dept)){
+            throw new RuntimeException("部门编码重复！");
+        }
         deptMapper.edit(dept);
     }
 

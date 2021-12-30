@@ -1,5 +1,7 @@
 package com.bjpowernode.crm.utils;
 
+import com.bjpowernode.crm.constants.Constants;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -7,10 +9,10 @@ public class DateTimeUtil {
 	
 	public static String getSysTime(){
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 		
 		Date date = new Date();
-		String dateStr = sdf.format(date);
+		String dateStr =Constants.DateFormat.SDF19.format(date);
 		
 		return dateStr;
 		

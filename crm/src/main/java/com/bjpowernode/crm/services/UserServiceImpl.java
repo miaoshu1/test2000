@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -130,5 +131,10 @@ public class UserServiceImpl implements UserService {
 
         newPwd = MD5Util.getMD5(newPwd);
         userMapper.changePwd(newPwd,user.getId());
+    }
+
+    @Override
+    public List getOwners() {
+        return userMapper.getOwners();
     }
 }

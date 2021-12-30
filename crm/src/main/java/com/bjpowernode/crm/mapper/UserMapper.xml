@@ -16,4 +16,8 @@
         select * from tbl_user where id=#{id}
     </select>
 
+    <select id="getOwners" resultType="string">
+        select CONCAT(loginAct,'_',name) from tbl_user
+    </select>
+
 </mapper>

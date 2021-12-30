@@ -125,6 +125,35 @@
 			$("#editForm").submit();
 		})
 
+		$("#delBtn").click(function (){
+			let $cks = $(":checkbox[name=id]:checked");
+			if ($cks.size() == 0){
+				alert("请选择删除项！");
+				return ;
+			}
+			if (!confirm("确定删除吗?")) return;
+
+			//将元素数组转换为值的数组
+			let ids = $cks.map(function (){
+				return this.value;
+			}).get().join(",");
+
+			$.ajax({
+				url: "/act/del.do?ids="+ids,
+				type: "delete",
+				success(data){
+					if (data.success){
+						load();//重新加载列表
+					}
+
+					if (data.msg){
+						alert(data.msg);
+					}
+				}
+			})
+
+		})
+
 		$("#exportBtn").click(function () {
 			location = "/act/export.do";
 		})
@@ -371,7 +400,7 @@
 				<div class="btn-group" style="position: relative; top: 18%;">
 				  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createActivityModal"><span class="glyphicon glyphicon-plus"></span> 创建</button>
 				  <button id="editBtn" type="button" class="btn btn-default" data-toggle="modal" data-target="#editActivityModal"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
-				  <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+				  <button id="delBtn" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
 				</div>
 				<div class="btn-group" style="position: relative; top: 18%;">
 				  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#importActivityModal"><span class="glyphicon glyphicon-import"></span> 导入</button>
