@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjpowernode.crm.mapper.ClueActivityMapper">
+    <resultMap id="caMap" type="ClueActivity">
+        <id property="id" column="a_id"/>
+        <result property="clueId" column="a_clueId"/>
+        <result property="activityId" column="a_activityId"/>
+
+        <association property="activity">
+            <id property="id" column="b_id"/>
+            <result property="owner" column="b_owner"/>
+            <result property="name" column="b_name"/>
+            <result property="startDate" column="b_startDate"/>
+            <result property="endDate" column="b_endDate"/>
+            <result property="cost" column="b_cost"/>
+            <result property="description" column="b_description"/>
+            <result property="createBy" column="b_createBy"/>
+            <result property="createTime" column="b_createTime"/>
+            <result property="editBy" column="b_editBy"/>
+            <result property="editTime" column="b_editTime"/>
+        </association>
+
+    </resultMap>
+
+    <select id="getClueActivities" resultMap="caMap">
+        select a.id          a_id,
+               a.clueId      a_clueId,
+               a.activityId  a_activityId,
+               b.id          b_id,
+               b.owner       b_owner,
+               b.name        b_name,
+               b.startDate   b_startDate,
+               b.endDate     b_endDate,
+               b.cost        b_cost,
+               b.description b_description,
+               b.createBy    b_createBy,
+               b.createTime  b_createTime,
+               b.editBy      b_editBy,
+               b.editTime    b_editTime
+        from tbl_clue_activity_relation a
+                 left join tbl_marketing_activities b on a.activityId = b.id
+        where a.clueId = #{clueId}
+    </select>
+
+    <delete id="delByClueId">
+        delete
+        from tbl_clue_activity_relation
+        where clueId = #{clueId}
+    </delete>
+
+    <insert id="saveList">
+        insert into tbl_clue_activity_relation values
+        <foreach collection="list" separator="," item="ca">
+            (#{ca.id},
+            #{ca.clueId},
+            #{ca.activityId})
+        </foreach>
+    </insert>
+</mapper>

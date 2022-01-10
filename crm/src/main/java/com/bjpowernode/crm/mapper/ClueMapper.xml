@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjpowernode.crm.mapper.ClueMapper">
+    <!--sql片段，用于抽取公共的SQL语句-->
+    <sql id="searchSQL">
+        <where>
+            <if test="search.name != null and search.name != ''">
+                and fullName like '%' #{search.name} '%'
+            </if>
+            <if test="search.owner != null and search.owner != ''">
+                and owner like '%' #{search.owner} '%'
+            </if>
+            <if test="search.phone != null and search.phone != ''">
+                and phone like '%' #{search.phone} '%'
+            </if>
+            <if test="search.mphone != null and search.mphone != ''">
+                and mphone like '%' #{search.mphone} '%'
+            </if>
+            <if test="search.company != null and search.company != ''">
+                and company like '%' #{search.company} '%'
+            </if>
+            <if test="search.source != null and search.source != ''">
+                and source=#{search.source}
+            </if>
+            <if test="search.state != null and search.state != ''">
+                and state=#{search.state}
+            </if>
+        </where>
+    </sql>
+
+    <select id="getCount" resultType="int">
+        select count(*) from tbl_clue
+        <include refid="searchSQL"/>
+    </select>
+
+    <select id="getPageData" resultType="Clue">
+        select * from tbl_clue
+        <include refid="searchSQL"/>
+        limit #{start},#{length}
+    </select>
+
+
+    <insert id="save">
+        insert into tbl_clue values(
+                                       #{id},
+                                       #{owner},
+                                       #{company},
+                                       #{phone},
+                                       #{website},
+                                       #{description},
+                                       #{fullName},
+                                       #{appellation},
+                                       #{source},
+                                       #{email},
+                                       #{mphone},
+                                       #{job},
+                                       #{state},
+                                       #{createBy},
+                                       #{createTime},
+                                       #{editBy},
+                                       #{editTime},
+                                       #{contactSummary},
+                                       #{nextContactTime},
+                                       #{address}
+                                   )
+    </insert>
+
+</mapper>

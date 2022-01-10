@@ -2,6 +2,7 @@ package com.bjpowernode.crm.web.controller;
 
 import com.bjpowernode.crm.constants.Constants;
 import com.bjpowernode.crm.pojo.Activity;
+import com.bjpowernode.crm.pojo.ActivityRemark;
 import com.bjpowernode.crm.pojo.User;
 import com.bjpowernode.crm.services.ActService;
 import com.bjpowernode.crm.utils.DateTimeUtil;
@@ -43,10 +44,31 @@ public class ActivityController {
         return Constants.Result.SUC_WITH_MSG;
     }
 
+    @PostMapping("saveRemark.do")
+    public Map saveRemark(ActivityRemark activityRemark,HttpSession session){
+        User user = (User) session.getAttribute(Constants.LOGIN_USER);
+        String createBy = user.getLoginAct() + "_" + user.getName();
+
+        if (activityRemark.getId() == null){
+            activityRemark.setNotePerson(createBy);
+            actService.saveRemark(activityRemark);
+        }else {
+            activityRemark.setEditPerson(createBy);
+            actService.editRemark(activityRemark);
+        }
+
+        return Constants.Result.SUC_WITH_MSG;
+    }
+
     @GetMapping("activity.json")
     public Activity getActivity(String id){
         Activity activity = actService.get(id);
         return activity;
+    }
+
+    @GetMapping("remarks.json")
+    private List getRemarks(String actId){
+        return actService.getRemarks(actId);
     }
 
     @PutMapping("edit.do")
@@ -61,6 +83,12 @@ public class ActivityController {
     @DeleteMapping("del.do")
     public Map del(String[] ids){
         actService.delete(ids);
+        return Constants.Result.SUC_WITH_MSG;
+    }
+
+    @DeleteMapping("delRemark.do")
+    public Map delRemark(String id){
+        actService.delRemark(id);
         return Constants.Result.SUC_WITH_MSG;
     }
 
